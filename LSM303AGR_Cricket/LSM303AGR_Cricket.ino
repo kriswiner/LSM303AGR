@@ -200,9 +200,9 @@ void loop() {
      LSM303AGR.readAccData(accelData); // INT1 cleared on any read
    
    // Now we'll calculate the accleration value into actual g's
-     ax = (float)accelData[0]*aRes;// - accelBias[0];  // get actual g value, this depends on scale being set
-     ay = (float)accelData[1]*aRes;// - accelBias[1];   
-     az = (float)accelData[2]*aRes;// - accelBias[2];  
+     ax = (float)accelData[0]*aRes - accelBias[0];  // get actual g value, this depends on scale being set
+     ay = (float)accelData[1]*aRes - accelBias[1];   
+     az = (float)accelData[2]*aRes - accelBias[2];  
    }
 
 

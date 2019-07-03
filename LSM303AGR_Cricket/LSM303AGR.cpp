@@ -37,20 +37,24 @@ float LSM303AGR::getAres(uint8_t Ascale) {
   // Possible accelerometer scales (and their register bit settings) are:
   // 2 Gs (00), 4 Gs (01), 8 Gs (10), and 16 Gs  (11). 
     case AFS_2G:
-         _aRes = 2.0f/512.0f;
+ //        _aRes = 2.0f/512.0f; //normal mode
+         _aRes = 2.0f/2048.0f; // hi-res mode
          return _aRes;
          break;
     case AFS_4G:
-         _aRes = 4.0f/512.0f;
+ //        _aRes = 4.0f/512.0f; // normal mode
+         _aRes = 4.0f/2048.0f; // high-res mode
          return _aRes;
          break;
     case AFS_8G:
-         _aRes = 8.0f/512.0f;
+//         _aRes = 8.0f/512.0f; // normal mode
+         _aRes = 8.0f/2048.0f; // hi-res mode
          return _aRes;
          break;
     case AFS_16G:
-         _aRes = 16.0f/512.0f;
-         return _aRes;
+//         _aRes = 16.0f/512.0f; // normal mode
+          _aRes = 16.0f/2048.0f; //hi-res mode
+        return _aRes;
          break;
   }
 }
@@ -62,7 +66,8 @@ void LSM303AGR::init(uint8_t Ascale, uint8_t AODR)
   _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_TMP_CFG_REG_A, 0xC0); // enable accelerometer temperature sensor
   _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG1_A, AODR << 4 | 0x07); // normal mode, enable all axes
   _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG3_A, 0x10); // data ready on INT1
-  _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG4_A, 0x80 | Ascale << 4); // BDU, full scale range, normal mode
+//  _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG4_A, 0x80 | Ascale << 4); // BDU, full scale range, normal mode
+  _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG4_A, 0x80 | 0x08 | Ascale << 4); // BDU, full scale range, high-res mode
   _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_CTRL_REG6_A, 0x08); // activity interrupt on INT2 
 
   _i2c_bus->writeByte(LSM303AGR_ADDRESS, LSM303AGR_ACT_THS_A, 0x0A); // set no-motion threshold to 10 x 2 g/128 mg ~ 150 mg
@@ -165,9 +170,14 @@ void LSM303AGR::readAccData(int16_t * destination)
 {
   uint8_t rawData[6];  // x/y/z accel register data stored here
   _i2c_bus->readBytes(LSM303AGR_ADDRESS, 0x80 | LSM303AGR_OUT_X_L_A, 6, &rawData[0]);  // Read the 6 raw data registers into data array
-  destination[0] = (int16_t)(((int16_t)rawData[1] << 8) | rawData[0]) >> 6;  // Turn the MSB and LSB into a signed 10-bit value in normal mode
-  destination[1] = (int16_t)(((int16_t)rawData[3] << 8) | rawData[2]) >> 6;  
-  destination[2] = (int16_t)(((int16_t)rawData[5] << 8) | rawData[4]) >> 6; 
+// normal mode
+//  destination[0] = (int16_t)(((int16_t)rawData[1] << 8) | rawData[0]) >> 6;  // Turn the MSB and LSB into a signed 10-bit value in normal mode
+//  destination[1] = (int16_t)(((int16_t)rawData[3] << 8) | rawData[2]) >> 6;  
+//  destination[2] = (int16_t)(((int16_t)rawData[5] << 8) | rawData[4]) >> 6; 
+// hi-res mode
+  destination[0] = (int16_t)(((int16_t)rawData[1] << 8) | rawData[0]) >> 4;  // Turn the MSB and LSB into a signed 12-bit value in normal mode
+  destination[1] = (int16_t)(((int16_t)rawData[3] << 8) | rawData[2]) >> 4;  
+  destination[2] = (int16_t)(((int16_t)rawData[5] << 8) | rawData[4]) >> 4; 
 }
 
 

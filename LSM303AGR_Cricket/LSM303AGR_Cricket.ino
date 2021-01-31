@@ -227,7 +227,7 @@ void loop() {
    }// end sensor interrupt handling
 
 
-    if(alarmFlag) { // update RTC output (serial display) whenever the RTC alarm condition is achieved and the MPU9250 is awake
+    if(alarmFlag) { // update RTC output (serial display) whenever the RTC alarm condition is achieved and the LSM303AGR is awake
        alarmFlag = false;
 
     // Read RTC

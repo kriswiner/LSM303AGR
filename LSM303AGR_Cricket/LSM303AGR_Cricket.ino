@@ -62,7 +62,7 @@ LSM303AGR LSM303AGR(&i2c_0); // instantiate LSM303AGR accel class
 #define LIS2MDL_intPin  A2 // interrupt for magnetometer data ready
 
 /* Specify sensor parameters (sample rate is twice the bandwidth)
- * choices are: MODR_10Hz, MOIDR_20Hz, MODR_50 Hz and MODR_100Hz
+ * choices are: MODR_10Hz, MODR_20Hz, MODR_50 Hz and MODR_100Hz
 */ 
 uint8_t MODR = MODR_10Hz;
 

@@ -4,14 +4,14 @@
  Created by Kris Winer
     
  The LSM303AGR is an ultra-low-power high-performance system-in-package featuring a 3D digital linear acceleration 
- sensor and a 3D digital magnetic sensor.The LSM303AGR has linear acceleration full scales of ±2g/±4g/±8g/16g and 
+ sensor and a 3D digital magnetic sensor.The LSM303AGR has linear acceleration full scales of ±2g/±4g/±8g/±16g and 
  a magnetic field dynamic range of ±50 gauss. The LSM303AGR includes an I2C serial bus interface that supports standard, 
  fast mode, fast mode plus, and high-speed (100 kHz, 400 kHz, 1 MHz, and 3.4 MHz) and an SPI serial standard interface.
  The system can be configured to generate an interrupt signal for free-fall, motion detection and magnetic field detection. 
  The magnetic and accelerometer blocks can be enabled or put into power-down mode separately.
 
  Here we are treating the accelerometer and magnetometer as separate sensors, an LSM303AGR accelerometer and an LIS2MDL magnetometer,
- event though they are embedded in the same device package. In reality, they are separate devices, so this makes sense as well as
+ even though they are embedded in the same device package. In reality, they are separate devices, so this makes sense as well as
  being convenient.
 
  https://www.st.com/content/ccc/resource/technical/document/datasheet/74/c4/19/54/62/c5/46/13/DM00177685.pdf/files/DM00177685.pdf/jcr:content/translations/en.DM00177685.pdf

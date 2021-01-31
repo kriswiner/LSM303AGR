@@ -193,7 +193,7 @@ void loop() {
   }
 
 
-   // If intPin goes high, either all data registers have new data
+   // If intPin goes high, all data registers have new data
    if(newLSM303AGRData == true) {   // on interrupt, read data
       newLSM303AGRData = false;     // reset newData flag
 
@@ -206,7 +206,7 @@ void loop() {
    }
 
 
-    // If intPin goes high, either all data registers have new data
+    // If intPin goes high, all data registers have new data
     if(newLIS2MDLData == true) {   // On interrupt, read data
       newLIS2MDLData = false;     // reset newData flag
 
